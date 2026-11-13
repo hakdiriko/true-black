@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">True Black</string>
+
+    <string name="state_off">Kapalı</string>
+    <string name="state_active_fmt">Etkin · %1$s</string>
+    <string name="state_needs_access">Erişim gerekli</string>
+
+    <string name="hero_on">Açık</string>
+    <string name="hero_on_sub">Koyu griler saf siyah. Pikseller kapalı.</string>
+    <string name="hero_off">Kapalı</string>
+    <string name="hero_off_sub">Siyah tabanı açmak için dokun</string>
+
+    <string name="section_profile">Profil</string>
+    <string name="section_calibration">Kalibrasyon</string>
+    <string name="section_behavior">Davranış</string>
+    <string name="section_access">Erişim</string>
+
+    <string name="preset_standard">Standart</string>
+    <string name="preset_deep">Derin</string>
+    <string name="preset_vivid">Canlı</string>
+    <string name="preset_subtle">Hafif</string>
+    <string name="preset_custom">Özel</string>
+    <string name="preset_standard_desc" formatted="false">%12 taban · 1,05× renk. Günlük okuma ve kodlama.</string>
+    <string name="preset_deep_desc" formatted="false">%16 taban · 1,10× renk. İnatçı uygulama panellerini siyaha indirir.</string>
+    <string name="preset_vivid_desc" formatted="false">%14 taban · 1,25× renk. Siyah üstünde mücevher tonları.</string>
+    <string name="preset_subtle_desc" formatted="false">%8 taban · nötr renk. Hafif, güç tasarruflu.</string>
+    <string name="preset_custom_desc">%%%1$d taban · %2$s× renk.</string>
+
+    <string name="cal_black_floor">Siyah taban</string>
+    <string name="cal_vibrancy">Canlılık</string>
+    <string name="cal_ramp_hint">Rampa canlı. İşaretin solundaki her şey piksel‑kapalı siyah olarak gösterilir.</string>
+
+    <string name="opt_tile">Hızlı Ayarlar kutucuğu</string>
+    <string name="opt_tile_sub">Bildirim panelinden aç/kapat</string>
+    <string name="opt_tile_sub_manual">Hızlı Ayarlar düzenleyicisinden ekle</string>
+    <string name="opt_boot">Yeniden başlatmada geri yükle</string>
+    <string name="opt_boot_sub">Sistem açılır açılmaz tabanı geri koy</string>
+    <string name="opt_keep">Kilit açılınca yeniden uygula</string>
+    <string name="opt_keep_sub">Gece Işığı ve Ekstra loş, compositor\'ı ezer. Bu, her kilit açılışında geri yükler — tek çağrı, yoklama yok.</string>
+    <string name="opt_dark">Sistem koyu temasını zorla</string>
+    <string name="opt_dark_sub">Etkinken Android\'i koyuya al, sonra geri döndür</string>
+    <string name="opt_haptics">Dokunsal geri bildirim</string>
+
+    <string name="access_shizuku">Shizuku</string>
+    <string name="access_connected">Bağlı</string>
+    <string name="access_needs_permission">Çalışıyor · izin gerekli</string>
+    <string name="access_root">Root</string>
+    <string name="access_root_sub">Hazır · su bir kez soracak</string>
+    <string name="access_none">Erişim yok</string>
+    <string name="access_none_sub">Shizuku (kablosuz hata ayıklama, PC\'siz) veya root gerekir</string>
+    <string name="access_none_installed">Shizuku\'yu başlat, sonra geri gel</string>
+    <string name="action_grant">İzin ver</string>
+    <string name="action_open">Aç</string>
+    <string name="action_get">Edin</string>
+    <string name="action_add">Ekle</string>
+    <string name="action_copy">Kopyala</string>
+
+    <string name="adb_title">Bunun yerine ADB kullan</string>
+    <string name="adb_sub">Aynı compositor komutu, bilgisayardan</string>
+    <string name="adb_on">Aç</string>
+    <string name="adb_off">Kapat</string>
+
+    <string name="tile_no_access">Kurulum için aç</string>
+
+    <string name="channel_keeper">Arka plan</string>
+    <string name="channel_keeper_desc">True Black\'i kilit açılışından sonra uygulanmış tutar</string>
+    <string name="keeper_title">True Black</string>
+    <string name="keeper_text">Kilit açılınca yeniden uygulanıyor</string>
+
+    <string name="err_no_access">Shizuku veya root gerekir</string>
+    <string name="err_failed">Compositor\'a ulaşılamadı: %1$s</string>
+    <string name="err_permission_denied">Shizuku\'da izin reddedildi</string>
+
+    <string name="footer">Ekran compositor\'ında uygulanır. Arka planda hiçbir şey çalışmaz. Görseller, metin ve renk tam aralığını korur.</string>
+</resources>

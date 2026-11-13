@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="?android:attr/colorControlNormal">
+    <!-- ring -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M12,3a9,9 0 1,0 0.0001,0Z M12,5a7,7 0 1,1 -0.0001,0Z" />
+    <!-- pixel -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M12,9.5a2.5,2.5 0 1,0 0.0001,0Z" />
+</vector>

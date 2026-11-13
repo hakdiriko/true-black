@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">True Black</string>
+
+    <!-- status -->
+    <string name="state_off">Off</string>
+    <string name="state_active_fmt">Active · %1$s</string>
+    <string name="state_needs_access">Needs access</string>
+
+    <!-- hero -->
+    <string name="hero_on">On</string>
+    <string name="hero_on_sub">Dark greys are pure black. Pixels off.</string>
+    <string name="hero_off">Off</string>
+    <string name="hero_off_sub">Tap to turn the floor to black</string>
+
+    <!-- sections -->
+    <string name="section_profile">Profile</string>
+    <string name="section_calibration">Calibration</string>
+    <string name="section_behavior">Behaviour</string>
+    <string name="section_access">Access</string>
+
+    <!-- presets -->
+    <string name="preset_standard">Standard</string>
+    <string name="preset_deep">Deep</string>
+    <string name="preset_vivid">Vivid</string>
+    <string name="preset_subtle">Subtle</string>
+    <string name="preset_custom">Custom</string>
+    <string name="preset_standard_desc">12 % floor · 1.05× colour. Everyday reading and coding.</string>
+    <string name="preset_deep_desc">16 % floor · 1.10× colour. Crushes stubborn app sidebars.</string>
+    <string name="preset_vivid_desc">14 % floor · 1.25× colour. Jewel tones on black.</string>
+    <string name="preset_subtle_desc">8 % floor · neutral colour. Gentle, power‑saving.</string>
+    <string name="preset_custom_desc">%1$d %% floor · %2$s× colour.</string>
+
+    <!-- calibration -->
+    <string name="cal_black_floor">Black floor</string>
+    <string name="cal_vibrancy">Vibrancy</string>
+    <string name="cal_ramp_hint">The ramp is live. Everything left of the mark is rendered as pixel‑off black.</string>
+
+    <!-- behaviour -->
+    <string name="opt_tile">Quick Settings tile</string>
+    <string name="opt_tile_sub">Toggle from the notification shade</string>
+    <string name="opt_tile_sub_manual">Add it from the Quick Settings editor</string>
+    <string name="opt_boot">Restore after reboot</string>
+    <string name="opt_boot_sub">Put the floor back as soon as the system is up</string>
+    <string name="opt_keep">Re‑apply on unlock</string>
+    <string name="opt_keep_sub">Night Light and Extra dim overwrite the compositor. This restores it on every unlock — one call, no polling.</string>
+    <string name="opt_dark">Force system dark theme</string>
+    <string name="opt_dark_sub">Switch Android to dark while active, restore after</string>
+    <string name="opt_haptics">Haptics</string>
+
+    <!-- access -->
+    <string name="access_shizuku">Shizuku</string>
+    <string name="access_connected">Connected</string>
+    <string name="access_needs_permission">Running · permission required</string>
+    <string name="access_root">Root</string>
+    <string name="access_root_sub">Ready · su will ask once</string>
+    <string name="access_none">No access</string>
+    <string name="access_none_sub">Needs Shizuku (wireless debugging, no PC) or root</string>
+    <string name="access_none_installed">Start Shizuku, then come back</string>
+    <string name="action_grant">Grant</string>
+    <string name="action_open">Open</string>
+    <string name="action_get">Get</string>
+    <string name="action_add">Add</string>
+    <string name="action_copy">Copy</string>
+
+    <string name="adb_title">Use ADB instead</string>
+    <string name="adb_sub">Same compositor command, from a computer</string>
+    <string name="adb_on">Turn on</string>
+    <string name="adb_off">Turn off</string>
+
+    <!-- tile -->
+    <string name="tile_no_access">Open to set up</string>
+
+    <!-- keeper -->
+    <string name="channel_keeper">Background</string>
+    <string name="channel_keeper_desc">Keeps True Black applied after unlock</string>
+    <string name="keeper_title">True Black</string>
+    <string name="keeper_text">Re‑applying on unlock</string>
+
+    <!-- errors -->
+    <string name="err_no_access">Needs Shizuku or root</string>
+    <string name="err_failed">Couldn\'t reach the compositor: %1$s</string>
+    <string name="err_permission_denied">Permission denied in Shizuku</string>
+
+    <string name="footer">Applied at the display compositor. Nothing runs in the background. Images, text and colour keep their full range.</string>
+</resources>
