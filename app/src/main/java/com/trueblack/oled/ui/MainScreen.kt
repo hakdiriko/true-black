@@ -226,6 +226,12 @@ fun MainScreen() {
             )
             if (engine.access.method == AccessMethod.NONE) {
                 Divider(tones)
+                SetupGuide(access = engine.access, tones = tones, onGrant = {
+                    Engine.requestShizukuPermission { granted ->
+                        if (!granted) scope.launch { snackbar.showSnackbar(msgPermissionDenied) }
+                    }
+                })
+                Divider(tones)
                 AdbRow(settings, tones)
             }
 
@@ -586,9 +592,7 @@ private fun AccessRow(access: AccessState, tones: Tones, onGrant: () -> Unit) {
             tones,
             if (shizukuInstalled) stringResource(R.string.action_open) else stringResource(R.string.action_get)
         ) {
-            val intent = if (shizukuInstalled) context.packageManager.getLaunchIntentForPackage(SHIZUKU_PACKAGE)
-            else Intent(Intent.ACTION_VIEW, Uri.parse(SHIZUKU_URL))
-            intent?.let { runCatching { context.startActivity(it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) } }
+            if (shizukuInstalled) openShizuku(context) else getShizuku(context)
         }
     }
 }
@@ -652,4 +656,84 @@ private fun CodeBlock(label: String, code: String, tones: Tones, onCopy: () -> U
 private fun copy(context: Context, text: String) {
     val cm = context.getSystemService(ClipboardManager::class.java) ?: return
     cm.setPrimaryClip(ClipData.newPlainText("True Black", text))
+}
+
+private fun openShizuku(context: Context) {
+    val i = context.packageManager.getLaunchIntentForPackage(SHIZUKU_PACKAGE) ?: return
+    runCatching { context.startActivity(i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+}
+
+private fun getShizuku(context: Context) {
+    val play = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$SHIZUKU_PACKAGE")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    if (runCatching { context.startActivity(play) }.isSuccess) return
+    runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(SHIZUKU_URL)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+}
+
+private fun openDeveloperOptions(context: Context) {
+    val dev = Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    if (runCatching { context.startActivity(dev) }.isSuccess) return
+    runCatching { context.startActivity(Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+}
+
+/**
+ * One-time setup, as a numbered list with the right system screen one tap away at each step.
+ * Shown only while the app has no way to reach the compositor.
+ */
+@Composable
+private fun SetupGuide(access: AccessState, tones: Tones, onGrant: () -> Unit) {
+    val context = LocalContext.current
+    val shizukuInstalled = remember(access) {
+        context.packageManager.getLaunchIntentForPackage(SHIZUKU_PACKAGE) != null
+    }
+    val current = when {
+        !shizukuInstalled -> 1
+        access is AccessState.ShizukuNeedsPermission -> 5
+        else -> 2
+    }
+    Column(Modifier.fillMaxWidth().padding(top = 14.dp, bottom = 6.dp)) {
+        Text(stringResource(R.string.setup_title), style = MaterialTheme.typography.bodyLarge, color = Paper)
+        Spacer(Modifier.height(2.dp))
+        Text(stringResource(R.string.setup_sub), style = MaterialTheme.typography.bodyMedium, color = tones.mute)
+        Spacer(Modifier.height(14.dp))
+        SetupStep(1, stringResource(R.string.setup_1), current, tones, stringResource(R.string.action_get)) { getShizuku(context) }
+        SetupStep(2, stringResource(R.string.setup_2), current, tones, stringResource(R.string.action_open)) { openDeveloperOptions(context) }
+        SetupStep(3, stringResource(R.string.setup_3), current, tones, null) {}
+        SetupStep(4, stringResource(R.string.setup_4), current, tones, stringResource(R.string.action_open)) { openShizuku(context) }
+        SetupStep(5, stringResource(R.string.setup_5), current, tones, stringResource(R.string.action_grant)) { onGrant() }
+        Spacer(Modifier.height(10.dp))
+        Text(stringResource(R.string.setup_after), style = MaterialTheme.typography.bodySmall, color = tones.faint)
+    }
+}
+
+@Composable
+private fun SetupStep(n: Int, text: String, current: Int, tones: Tones, action: String?, onAction: () -> Unit) {
+    val done = n < current
+    val active = n == current
+    Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Box(
+            Modifier
+                .size(24.dp)
+                .clip(CircleShape)
+                .background(if (done) Paper else Ink)
+                .border(1.dp, if (done || active) Paper else tones.hair, CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                if (done) "✓" else n.toString(),
+                style = MaterialTheme.typography.labelMedium,
+                color = if (done) Ink else if (active) Paper else tones.mute
+            )
+        }
+        Spacer(Modifier.width(14.dp))
+        Text(
+            text,
+            style = MaterialTheme.typography.bodyMedium,
+            color = if (done) tones.mute else Paper,
+            modifier = Modifier.weight(1f)
+        )
+        if (action != null && active) {
+            Spacer(Modifier.width(12.dp))
+            PillButton(action, onAction)
+        }
+    }
 }

@@ -5,6 +5,7 @@ import android.os.Parcel
 import android.util.Log
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
+import rikka.shizuku.ShizukuRemoteProcess
 import rikka.shizuku.SystemServiceHelper
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -75,20 +76,29 @@ object Access {
     fun setColorMatrix(method: AccessMethod, matrix: FloatArray?) {
         when (method) {
             AccessMethod.SHIZUKU -> {
+                // Primary: the exact `service call` ADB users run, executed with shell identity.
+                // Secondary: a direct binder transaction (needs the hidden-API exemption to resolve ServiceManager).
+                val shellError = try {
+                    runServiceCall(method, matrix); return
+                } catch (e: Throwable) { Log.w(TAG, "service call via Shizuku failed", e); e.message ?: e.javaClass.simpleName }
                 try {
                     transactShizuku(matrix)
                 } catch (e: Throwable) {
-                    Log.w(TAG, "binder path failed, falling back to shell", e)
-                    val r = exec(method, ColorMath.serviceCallArgs(matrix))
-                    if (!r.ok) throw IllegalStateException(r.stderr.ifBlank { r.stdout }.ifBlank { "service call failed (${r.exitCode})" })
+                    Log.w(TAG, "binder path failed", e)
+                    throw IllegalStateException("$shellError / binder: ${e.message ?: e.javaClass.simpleName}")
                 }
             }
-            AccessMethod.ROOT -> {
-                val r = exec(method, ColorMath.serviceCallArgs(matrix))
-                if (!r.ok) throw IllegalStateException(r.stderr.ifBlank { r.stdout }.ifBlank { "su failed (${r.exitCode})" })
-            }
+            AccessMethod.ROOT -> runServiceCall(method, matrix)
             AccessMethod.NONE -> throw IllegalStateException("no access")
         }
+    }
+
+    private fun runServiceCall(method: AccessMethod, matrix: FloatArray?) {
+        val r = exec(method, ColorMath.serviceCallArgs(matrix))
+        val out = (r.stdout + "\n" + r.stderr)
+        val failed = !r.ok || out.contains("Error", ignoreCase = true) || out.contains("failed", ignoreCase = true) ||
+            out.contains("denied", ignoreCase = true) || out.contains("not found", ignoreCase = true)
+        if (failed) throw IllegalStateException(out.trim().ifBlank { "service call failed (${r.exitCode})" })
     }
 
     private fun transactShizuku(matrix: FloatArray?) {
@@ -126,14 +136,18 @@ object Access {
         val tOut = Thread { runCatching { out.append(process.inputStream.bufferedReader().readText()) } }
         val tErr = Thread { runCatching { err.append(process.errorStream.bufferedReader().readText()) } }
         tOut.start(); tErr.start()
-        val finished = process.waitFor(timeoutSec, TimeUnit.SECONDS)
+        // ShizukuRemoteProcess does not support java.lang.Process#waitFor(long, TimeUnit) — its exitValue()
+        // throws across binder while the process is alive — so use its own timed wait.
+        val finished = if (process is ShizukuRemoteProcess) process.waitForTimeout(timeoutSec, TimeUnit.SECONDS)
+        else process.waitFor(timeoutSec, TimeUnit.SECONDS)
         if (!finished) {
-            process.destroy()
+            runCatching { process.destroy() }
             tOut.join(500); tErr.join(500)
             return ShellResult(-1, out.toString(), "timeout")
         }
-        tOut.join(1000); tErr.join(1000)
-        return ShellResult(process.exitValue(), out.toString().trim(), err.toString().trim())
+        tOut.join(1500); tErr.join(1500)
+        val code = runCatching { process.exitValue() }.getOrDefault(0)
+        return ShellResult(code, out.toString().trim(), err.toString().trim())
     }
 
     /**

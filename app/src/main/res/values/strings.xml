@@ -83,4 +83,14 @@
     <string name="err_permission_denied">Permission denied in Shizuku</string>
 
     <string name="footer">Applied at the display compositor. Nothing runs in the background. Images, text and colour keep their full range.</string>
+
+    <!-- setup guide -->
+    <string name="setup_title">One‑time setup</string>
+    <string name="setup_sub">Android lets only the shell talk to the compositor. Shizuku lends that identity — two minutes, no computer.</string>
+    <string name="setup_1">Install Shizuku</string>
+    <string name="setup_2">Settings › About phone › tap Build number 7 times, then turn on Wireless debugging in Developer options</string>
+    <string name="setup_3">In Shizuku choose Start via Wireless debugging › Pairing, and enter the 6‑digit code shown in Wireless debugging › Pair device</string>
+    <string name="setup_4">In Shizuku tap Start</string>
+    <string name="setup_5">Grant True Black access</string>
+    <string name="setup_after">After a reboot: open Shizuku, tap Start. Pairing stays. With root, Shizuku starts by itself.</string>
 </resources>

@@ -73,4 +73,13 @@
     <string name="err_permission_denied">Shizuku\'da izin reddedildi</string>
 
     <string name="footer">Ekran compositor\'ında uygulanır. Arka planda hiçbir şey çalışmaz. Görseller, metin ve renk tam aralığını korur.</string>
+
+    <string name="setup_title">Tek seferlik kurulum</string>
+    <string name="setup_sub">Android, compositor ile yalnızca kabuğun konuşmasına izin verir. Shizuku o kimliği ödünç verir — iki dakika, bilgisayarsız.</string>
+    <string name="setup_1">Shizuku\'yu kur</string>
+    <string name="setup_2">Ayarlar › Telefon hakkında › Derleme numarasına 7 kez dokun, sonra Geliştirici seçeneklerinde Kablosuz hata ayıklamayı aç</string>
+    <string name="setup_3">Shizuku\'da Kablosuz hata ayıklama ile başlat › Eşleştir\'i seç, Kablosuz hata ayıklama › Cihazı eşleştir\'de görünen 6 haneli kodu gir</string>
+    <string name="setup_4">Shizuku\'da Başlat\'a dokun</string>
+    <string name="setup_5">True Black\'e erişim ver</string>
+    <string name="setup_after">Yeniden başlatma sonrası: Shizuku\'yu aç, Başlat\'a dokun. Eşleştirme kalır. Root varsa Shizuku kendi başlar.</string>
 </resources>
