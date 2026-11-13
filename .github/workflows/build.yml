@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -35,12 +35,3 @@ jobs:
         with:
           name: TrueBlack
           path: TrueBlack.apk
-
-      - name: Publish release
-        if: github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: build-${{ github.run_number }}
-          name: True Black build ${{ github.run_number }}
-          files: TrueBlack.apk
-          make_latest: true
