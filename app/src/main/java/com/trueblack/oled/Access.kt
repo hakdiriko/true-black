@@ -115,7 +115,7 @@ object Access {
     // ---------------------------------------------------------------- shell
 
     /** Runs a command with elevated identity. Blocking; call off the main thread. */
-    fun exec(method: AccessMethod, args: List<String>, timeoutSec: Long = 8): ShellResult {
+    fun exec(method: AccessMethod, args: List<String>, timeoutSec: Long = 25): ShellResult {
         val process: Process = when (method) {
             AccessMethod.SHIZUKU -> shizukuProcess(args.toTypedArray())
             AccessMethod.ROOT -> ProcessBuilder("su", "-c", args.joinToString(" ") { shellQuote(it) }).start()

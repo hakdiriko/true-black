@@ -68,8 +68,13 @@ object Engine {
 
     /** Shizuku permission request; result lands in [onResult] on the main thread. */
     fun requestShizukuPermission(onResult: (Boolean) -> Unit) {
-        permissionCallback = onResult
         try {
+            if (Shizuku.shouldShowRequestPermissionRationale()) {
+                // User chose "don't ask again" inside Shizuku; the dialog will not appear.
+                onResult(false)
+                return
+            }
+            permissionCallback = onResult
             Shizuku.requestPermission(REQ_SHIZUKU)
         } catch (e: Throwable) {
             Log.w(TAG, "requestPermission failed", e)
